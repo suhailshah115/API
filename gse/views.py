@@ -86,4 +86,3 @@ def resolve_contact(requst):
 			serializer = ContactSerializer(related_contacts,many=True)
 			response_data = format_data(serializer)
 			return Response(response_data)
-
