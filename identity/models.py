@@ -7,13 +7,13 @@ class Contact(models.Model):
 	phone = PhoneNumberField()
 	created_at = models.DateTimeField(auto_now_add=True)
 	primary_contact = models.ForeignKey('self', null=True,
-		                                 blank=True, on_delete=models.SET_NULL,
+		                                 blank=True, on_delete=models.CASCADE,
 		                                 related_name= 'linked_contacts' )
 
-	def save(self,*args,**kwargs):
+	'''def save(self,*args,**kwargs):
 		if not self.primary_contact:
 			self.primary_contact = self
-		super.save(*args,**kwargs)
+		super().save(*args,**kwargs)'''
 
 	class Meta:
 		ordering = ['created_at']
