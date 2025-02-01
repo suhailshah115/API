@@ -14,3 +14,6 @@ class Contact(models.Model):
 		if not self.primary_contact:
 			self.primary_contact = self
 		super.save(*args,**kwargs)
+
+	class Meta:
+		ordering = ['created_at']
