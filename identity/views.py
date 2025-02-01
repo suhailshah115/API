@@ -4,11 +4,16 @@ from rest_framework import status
 from .models import Contact
 from .serializer import ContactSerializer
 from django.db.models import Q
+from .helper import format_data
 
 @api_view(['GET'])
 def get_contact(requst):
-	serializer = ContactSerializer({'id':1,'email':'suhail@suhail.com','phone':'6468767273'})
-	return Response(serializer.data)
+	contacts= Contact.objects.all()
+	contacts = Contact.objects.all()
+	serializer = ContactSerializer(contacts,many=True)
+	response_data = format_data(serializer)
+	return Response(response_data)
+
 
 
 @api_view(['POST'])
@@ -26,7 +31,8 @@ def resolve_contact(requst):
 		primary_contact = existing_record.primary_contact
 		related_contacts = Contact.objects.filter(primary_contact=primary_contact)
 		serializer = ContactSerializer(related_contacts,many=True)
-		return Response(serializer.data)
+		response_data = format_data(serializer)
+		return Response(response_data)
 
 
 	else:
@@ -45,7 +51,8 @@ def resolve_contact(requst):
 			if len(unique_primary_contacts) == 1:
 				related_contacts = Contact.objects.filter(primary_contact__in=unique_primary_contacts)
 				serializer = ContactSerializer(related_contacts,many=True)
-				return Response(serializer.data)
+				response_data = format_data(serializer)
+				return Response(response_data)
 
 
 
@@ -56,8 +63,8 @@ def resolve_contact(requst):
 			all_contacts.update(primary_contact=primary_contact)
 			related_contacts = primary_contact.linked_contacts.all()
 			serializer = ContactSerializer(related_contacts,many=True)
-			return Response(serializer.data)
-		    
+			response_data = format_data(serializer)
+			return Response(response_data)
 
 		else:
 
@@ -77,6 +84,6 @@ def resolve_contact(requst):
 
 			related_contacts = Contact.objects.filter(primary_contact=primary_contact)
 			serializer = ContactSerializer(related_contacts,many=True)
-			return Response(serializer.data)
-
+			response_data = format_data(serializer)
+			return Response(response_data)
 
