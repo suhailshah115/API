@@ -18,5 +18,5 @@ def format_data(serializer):
             phones_set.add(phone)
             result["phones"].append(phone)
     
-    response_data = json.dumps(result, separators=(',',':'))
+    response_data =result
     return response_data

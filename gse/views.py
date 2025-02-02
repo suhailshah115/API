@@ -58,7 +58,7 @@ def resolve_contact(requst):
 			if len(unique_primary_contacts) == 1:
 				related_contacts = Contact.objects.filter(primary_contact__in=unique_primary_contacts)
 				serializer = ContactSerializer(related_contacts,many=True)
-				response_data = format_data(serializer)
+				#response_data = format_data(serializer)
 				return Response(response_data)
 
 
