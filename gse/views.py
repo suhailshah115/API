@@ -4,7 +4,7 @@ from rest_framework import status
 from .models import Contact
 from .serializer import ContactSerializer
 from django.db.models import Q
-from .helper import format_data
+from .helper import format_data, validate_email, validate_phone
 from django.shortcuts import redirect
 
 def home_view(requst):
@@ -23,14 +23,23 @@ def get_contact(requst):
 
 
 @api_view(['POST'])
-def resolve_contact(requst):
+def resolve_contact(request):
 
-	email = requst.data.get('email')
-	phone = requst.data.get('phone')
+	if not isinstance(request.data, dict):
+		return Response({'error': 'Invalid input format. Expected a JSON object.'}, status=400)
+
+	email = request.data.get('email')
+	phone = request.data.get('phone')
 	
 
 	if not email and not phone:
-		return Response({'Error: Either Email or Phone is required'}, status=400)
+		return Response({'Error:  Email and Phone is required'}, status=400)
+
+	if email and not validate_email(email):
+		return Response({'error': 'Invalid email format'}, status=400)
+
+	if phone and not validate_phone(phone):
+		return Response({'error': 'Invalid phone number format'}, status=400)
 
 	existing_record = Contact.objects.filter(email=email, phone=phone).first()
 	

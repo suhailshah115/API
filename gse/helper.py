@@ -1,4 +1,5 @@
 import json
+import re
 
 def format_data(serializer):
     result = {"contactIds": [], "emails": [], "phones": [] }
@@ -20,3 +21,14 @@ def format_data(serializer):
     
     response_data =result
     return response_data
+
+
+def validate_email(email):
+    email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+    return re.match(email_regex, email) is not None
+
+def validate_phone(phone):
+    phone = phone.replace('+', '')
+    if not phone.isdigit():
+        return False
+    return True
