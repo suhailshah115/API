@@ -32,6 +32,10 @@ Django Rest Framework (DRF): Used for building RESTful APIs. In this project, se
 - Django REST Framework
 - SQLite (default for development)
 
+## Deployment
+
+This app is hosted on AWS EC2, and you can access the service at the following address: http://13.48.147.142:8000/gse/resolve-contact
+
 ### Installation
 
 1. **Clone the repository:**
