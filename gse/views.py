@@ -5,10 +5,16 @@ from .models import Contact
 from .serializer import ContactSerializer
 from django.db.models import Q
 from .helper import format_data
+from django.shortcuts import redirect
+
+def home_view(requst):
+	return redirect('resolve-contact')
+
 
 @api_view(['GET'])
 def get_contact(requst):
-	contacts= Contact.objects.all()
+
+	
 	contacts = Contact.objects.all()
 	serializer = ContactSerializer(contacts,many=True)
 	response_data = format_data(serializer)
@@ -18,6 +24,7 @@ def get_contact(requst):
 
 @api_view(['POST'])
 def resolve_contact(requst):
+
 	email = requst.data.get('email')
 	phone = requst.data.get('phone')
 	
