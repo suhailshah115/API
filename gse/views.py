@@ -41,6 +41,8 @@ def resolve_contact(request):
 	if phone and not validate_phone(phone):
 		return Response({'error': 'Invalid phone number format'}, status=400)
 
+	phone = str(phone)
+
 	existing_record = Contact.objects.filter(email=email, phone=phone).first()
 	
 	if existing_record :

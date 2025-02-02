@@ -28,6 +28,7 @@ def validate_email(email):
     return re.match(email_regex, email) is not None
 
 def validate_phone(phone):
+    phone = str(phone)
     phone = phone.replace('+', '')
     if not phone.isdigit():
         return False
